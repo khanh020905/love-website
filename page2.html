@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Scrapbook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background-color: #5a0303; /* Deep dark red */
+            /* Corduroy texture */
+            background-image: repeating-linear-gradient(
+                90deg,
+                rgba(0,0,0,0.15) 0px,
+                rgba(0,0,0,0.15) 3px,
+                transparent 3px,
+                transparent 7px
+            );
+            font-family: 'Cormorant Garamond', serif;
+            color: #fff4f4;
+            overflow-x: hidden;
+        }
+
+        .scrapbook-container {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 1450px;
+            padding: 50px 20px;
+        }
+
+        /* --- Typography --- */
+        .text-block {
+            position: absolute;
+            font-size: 2.2rem;
+            line-height: 1.4;
+            text-align: center;
+            text-shadow: 2px 3px 6px rgba(0,0,0,0.7);
+            max-width: 380px;
+            z-index: 10;
+        }
+
+        /* --- Scrapbook Elements --- */
+        .center-frame {
+            position: absolute;
+            top: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 580px;
+            height: 680px;
+            background-color: #fce2e5; /* Soft light pink inner */
+            border: 28px solid #630505; /* Thick dark red outer frame */
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6), inset 0 0 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 2;
+        }
+
+        .polaroid {
+            position: absolute;
+            background: #fcf9f2; /* Vintage paper white */
+            padding: 12px 12px 45px 12px;
+            box-shadow: 2px 12px 25px rgba(0,0,0,0.5);
+            z-index: 3;
+            transform-origin: center;
+        }
+        .polaroid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Special Frames */
+        .frame-checkered {
+            background-color: #fff;
+            background-image: 
+                linear-gradient(45deg, #a42020 25%, transparent 25%, transparent 75%, #a42020 75%, #a42020),
+                linear-gradient(45deg, #a42020 25%, transparent 25%, transparent 75%, #a42020 75%, #a42020);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            padding-bottom: 50px;
+        }
+        .frame-polkadot {
+            background-color: #3b2a1a;
+            background-image: radial-gradient(#dfccb9 25%, transparent 25%);
+            background-size: 20px 20px;
+            padding-bottom: 50px;
+        }
+        .frame-inner {
+            background: white;
+            padding: 6px;
+            height: 240px;
+        }
+
+        /* Stickers */
+        .sticker {
+            position: absolute;
+            filter: drop-shadow(2px 6px 10px rgba(0,0,0,0.4));
+            z-index: 15;
+            user-select: none;
+            pointer-events: none;
+        }
+        .sticker-text {
+            font-size: 55px;
+            line-height: 1;
+        }
+
+        /* The cute Snoopy-like sticker */
+        .drawn-sticker {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            border: 3px solid #333;
+            box-shadow: 2px 8px 15px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: rotate(-10deg);
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: absolute;
+            top: 1300px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ebd1d1;
+            color: #5e1111;
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            font-size: 1.8rem;
+            padding: 12px 60px;
+            border-radius: 30px;
+            border: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 20;
+            letter-spacing: 2px;
+            pointer-events: auto;
+        }
+        .back-btn:hover {
+            transform: translateX(-50%) scale(1.1);
+            background-color: #fff;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 1024px) {
+            .scrapbook-container {
+                transform: scale(0.7);
+                transform-origin: top center;
+                min-height: 1100px;
+            }
+        }
+        @media (max-width: 768px) {
+            .scrapbook-container {
+                transform: scale(0.45);
+                min-height: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scrapbook-container">
+
+        <!-- Center Bouquet Frame -->
+        <div class="center-frame gs-reveal">
+            <!-- Bouquet image (Beautiful red roses) -->
+            <img src="https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=800&q=80" 
+                 alt="Red Bouquet" 
+                 style="width: 100%; height: 90%; object-fit: cover; margin-bottom: -15px; border-radius: 8px; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));">
+            
+            <!-- Big red bow at bottom -->
+            <div class="sticker" style="bottom: -60px; font-size: 110px; z-index: 5;">🎀</div>
+        </div>
+
+        <!-- Ribbon Sticker (Left of center) -->
+        <div class="sticker gs-reveal" style="top: 250px; left: 20%; width: 220px; transform: rotate(-25deg) scaleX(-1);">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; filter: drop-shadow(2px 5px 8px rgba(0,0,0,0.6));">
+                <path d="M20 90 C 40 70, 10 30, 40 40 C 60 50, 80 10, 90 30 C 100 50, 70 80, 50 70 C 30 60, 0 110, 20 90 Z" fill="#d4af37" stroke="#eadd99" stroke-width="2"/>
+                <path d="M25 85 C 40 68, 15 35, 40 40 C 58 48, 75 15, 85 30" stroke="#fceabb" stroke-width="1.5" fill="none"/>
+            </svg>
+        </div>
+
+        <!-- Polaroid 1 (Top Left) -->
+        <div class="polaroid gs-reveal" style="top: 80px; left: 6%; width: 280px; height: 350px; transform: rotate(-8deg);">
+            <!-- Romantic couple kissing -->
+            <img src="https://images.unsplash.com/photo-1536640712-4d4c36ef0e46?auto=format&fit=crop&w=600&q=80" alt="Couple 1">
+            <!-- White doodle flower -->
+            <div class="sticker sticker-text" style="top: -25px; right: -25px; filter: grayscale(1) brightness(2) drop-shadow(2px 2px 3px rgba(0,0,0,0.4));">💮</div>
+            <!-- Cherries -->
+            <div class="sticker sticker-text" style="bottom: 10px; left: -35px;">🍒</div>
+        </div>
+
+        <!-- Text 1 -->
+        <div class="text-block gs-reveal" style="top: 520px; left: 4%;">
+            A beautiful soul<br>whose love is felt in<br>the smallest things
+        </div>
+
+        <!-- Polaroid 2 (Top Right, Checkered) -->
+        <div class="polaroid frame-checkered gs-reveal" style="top: 180px; right: 5%; width: 280px; height: 340px; transform: rotate(12deg);">
+            <div class="frame-inner">
+                <!-- Aesthetic romantic couple -->
+                <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=80" alt="Couple 2">
+            </div>
+            <!-- Silver star -->
+            <div class="sticker sticker-text" style="bottom: -20px; right: -20px; filter: grayscale(1) brightness(1.8) drop-shadow(2px 4px 6px rgba(0,0,0,0.5));">⭐</div>
+        </div>
+
+        <!-- Text 2 -->
+        <div class="text-block gs-reveal" style="top: 620px; right: 2%;">
+            Someone who<br>always stays by your<br>side through every<br>challenge.
+        </div>
+
+        <!-- Snoopy Sticker -->
+        <div class="sticker drawn-sticker gs-reveal" style="top: 660px; left: 26%; z-index: 20;">
+            <div style="color: #333; font-family: 'Comic Sans MS', cursive, sans-serif; font-size: 1.4rem; font-weight: bold; margin-bottom: 5px;">for you</div>
+            <div style="font-size: 70px;">🐶🌻</div>
+        </div>
+
+        <!-- Polaroid 3 (Bottom Left) -->
+        <div class="polaroid gs-reveal" style="top: 850px; left: 8%; width: 260px; height: 320px; transform: rotate(8deg);">
+            <!-- Elegant couple holding hands -->
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Couple 3">
+            <div class="sticker sticker-text" style="top: -30px; left: -30px; filter: grayscale(1) brightness(1.8);">⭐</div>
+            <div class="sticker sticker-text" style="bottom: 10px; right: -30px;">❤️</div>
+        </div>
+
+        <!-- Text 3 -->
+        <div class="text-block gs-reveal" style="top: 960px; left: 50%; transform: translateX(-50%); width: 500px;">
+            My favorite person, my<br>safe place, and my greatest<br>blessing
+        </div>
+
+        <!-- Polaroid 4 (Bottom Right, Polka dot) -->
+        <div class="polaroid frame-polkadot gs-reveal" style="top: 900px; right: 10%; width: 280px; height: 340px; transform: rotate(-10deg);">
+            <div class="frame-inner">
+                <!-- Happy couple smiling -->
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" alt="Couple 4">
+            </div>
+            <!-- Pocket watch -->
+            <div class="sticker sticker-text" style="bottom: -20px; right: -35px; font-size: 70px; filter: drop-shadow(2px 5px 8px rgba(0,0,0,0.6));">🕰️</div>
+            <!-- Red flower -->
+            <div class="sticker sticker-text" style="top: -40px; right: 10px;">🌺</div>
+        </div>
+
+        <!-- Back Button -->
+        <button class="back-btn gs-reveal" onclick="window.location.href='index.html'">Back</button>
+
+    </div>
+
+    <script>
+        // Cute entry animation
+        gsap.from('.gs-reveal', {
+            y: 80,
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.15,
+            ease: 'back.out(1.2)',
+            delay: 0.2
+        });
+
+        // Floating effect for stickers and polaroids
+        const elements = document.querySelectorAll('.polaroid, .sticker');
+        elements.forEach(el => {
+            // Give each element a slightly different animation
+            const randomY = Math.random() * 8 + 4;
+            const randomDur = Math.random() * 2 + 3.5;
+            
+            gsap.to(el, {
+                y: `+=${randomY}`,
+                rotation: `+=${Math.random() * 1.5 - 0.75}`,
+                duration: randomDur,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+        });
+    </script>
+</body>
+</html>

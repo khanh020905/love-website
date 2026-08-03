@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Cards Component</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            /* Màu nền hơi kem */
+            background-color: #f8f6f0;
+            font-family: 'Inter', sans-serif;
+            /* Pattern dấu cộng (+) */
+            background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M30 26v8m-4-4h8" stroke="%23e8e4d9" stroke-width="1.5" fill="none" stroke-linecap="round"/%3E%3C/svg%3E');
+        }
+        
+        .ribbon {
+            width: 24px;
+            height: 55px;
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            /* Tạo hình cờ đuôi nheo */
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .polaroid {
+            background: white;
+            padding: 12px;
+            padding-bottom: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            position: relative;
+            z-index: 10;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            width: 100%;
+        }
+        
+        .polaroid::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+            pointer-events: none;
+        }
+
+        .polaroid:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            z-index: 20;
+        }
+        
+        /* Hiệu ứng bóng đổ nhẹ cho ribbon để nó có chiều sâu */
+        .ribbon-shadow {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(0,0,0,0.1);
+            filter: blur(2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8">
+
+    <div class="relative w-full max-w-7xl mx-auto pt-20 pb-10 px-4">
+        
+        <!-- Sợi dây kết nối ngang (Curved Line) -->
+        <svg class="absolute top-8 left-0 w-full" style="height: 40px; z-index: 1;" preserveAspectRatio="none" viewBox="0 0 1000 40">
+            <!-- Đường cong nhẹ -->
+            <path d="M0,20 Q250,5 500,20 T1000,20" fill="none" stroke="#a3967d" stroke-width="1.5"/>
+        </svg>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mt-4 relative z-10">
+            
+            <!-- Card 1 -->
+            <div class="flex flex-col items-center text-center group">
+                <div class="relative w-full mb-6 px-2">
+                    <div class="ribbon bg-[#e74c3c]"></div>
+                    <div class="polaroid transform -rotate-3">
+                        <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?q=80&w=800&auto=format&fit=crop" alt="Trẻ em chơi đùa" class="w-full aspect-[4/3] object-cover">
+                    </div>
+                </div>
+                <h3 class="text-[17px] font-bold text-[#1b5e3f] mb-3 leading-snug px-2">Con nhút nhát, thiếu kỹ năng giao tiếp và làm việc nhóm?</h3>
+                <p class="text-gray-500 text-[14px] leading-relaxed px-4">Con ít gặp bạn bè, không có sự kiện để con học thêm các kỹ năng mới?</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="flex flex-col items-center text-center group">
+                <div class="relative w-full mb-6 px-2">
+                    <div class="ribbon bg-[#2ecc71]"></div>
+                    <div class="polaroid transform rotate-2 mt-2">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop" alt="Trẻ em xem điện thoại" class="w-full aspect-[4/3] object-cover">
+                    </div>
+                </div>
+                <h3 class="text-[17px] font-bold text-[#1b5e3f] mb-3 leading-snug px-2 mt-[-8px]">Con ít vận động, sức khỏe kém và chán nản?</h3>
+                <p class="text-gray-500 text-[14px] leading-relaxed px-4">Vì suốt ngày xem tivi, điện thoại, cho ra ngoài chơi thì không ai để ý, dễ gặp nguy hiểm.</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="flex flex-col items-center text-center group">
+                <div class="relative w-full mb-6 px-2">
+                    <div class="ribbon bg-[#3498db]"></div>
+                    <div class="polaroid transform -rotate-2 mt-1">
+                        <img src="https://images.unsplash.com/photo-1517672651691-24622a91b550?q=80&w=800&auto=format&fit=crop" alt="Trẻ em buồn chán" class="w-full aspect-[4/3] object-cover">
+                    </div>
+                </div>
+                <h3 class="text-[17px] font-bold text-[#1b5e3f] mb-3 leading-snug px-2 mt-[-4px]">Con thiếu tính kỷ luật, sống thiếu tự lập?</h3>
+                <p class="text-gray-500 text-[14px] leading-relaxed px-4">Dậy muộn, sinh hoạt thất thường, thiếu tự giác, không học bài...</p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="flex flex-col items-center text-center group">
+                <div class="relative w-full mb-6 px-2">
+                    <div class="ribbon bg-[#e67e22]"></div>
+                    <div class="polaroid transform rotate-3">
+                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=800&auto=format&fit=crop" alt="Trẻ em học bài" class="w-full aspect-[4/3] object-cover">
+                    </div>
+                </div>
+                <h3 class="text-[17px] font-bold text-[#1b5e3f] mb-3 leading-snug px-2">Con thiếu kỹ năng sống quan trọng để tự bảo vệ bản thân?</h3>
+                <p class="text-gray-500 text-[14px] leading-relaxed px-4">Đặc biệt khi nghỉ hè, con ở nhà 1 mình không biết cách xử lý các tình huống khẩn cấp, bất ngờ....</p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
